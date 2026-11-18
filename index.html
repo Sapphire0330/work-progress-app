@@ -6,13 +6,19 @@
 <title>工作進度</title>
 <meta name="theme-color" content="#1F3864">
 <meta name="apple-mobile-web-app-title" content="工作進度">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/png" href="favicon.png?v=2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <link rel="manifest" href="manifest.webmanifest?v=2">
 <script>
   var APP_URL = 'https://script.google.com/macros/s/AKfycbwLInQlLcsM2b4txP0IYZyn0LJFnJ3CSdefzk52NfdBbTusR9qdtiHKSlRdc6A9TsdoAw/exec';
-  // 從主畫面圖示開啟（網址帶 home=1）就直接進 App
-  if (/[?&]home=1\b/.test(location.search)) location.replace(APP_URL);
+  // 從主畫面圖示開啟時直接進 App：
+  // iPhone「打開為網頁 App」＝standalone 模式；Android 由 manifest 的 start_url 帶 launch=1
+  var fromHome = /[?&]launch=1\b/.test(location.search) ||
+    window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  if (fromHome) location.replace(APP_URL);
 </script>
 <style>
   *{box-sizing:border-box}
@@ -60,8 +66,6 @@
     var n = document.getElementById('lineNote');
     n.innerHTML = '⚠️ 目前在 LINE 裡開啟，無法加到主畫面。<a style="color:#fff" href="?openExternalBrowser=1">點這裡改用手機瀏覽器開啟</a>';
   }
-  // iPhone 加入主畫面時會記下目前網址：先把網址換成 ?home=1，之後從主畫面點開就會直接進 App
-  if (!inLine && history.replaceState) history.replaceState(null, '', location.pathname + '?home=1');
 </script>
 </body>
 </html>

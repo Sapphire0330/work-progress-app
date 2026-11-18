@@ -1,9 +1,9 @@
 {
   "name": "工作進度",
   "short_name": "工作進度",
-  "start_url": "./?home=1",
+  "start_url": "./?launch=1",
   "scope": "./",
-  "display": "browser",
+  "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#1F3864",
   "icons": [
