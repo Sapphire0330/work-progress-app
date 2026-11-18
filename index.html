@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>工作進度</title>
+<meta name="theme-color" content="#1F3864">
+<meta name="apple-mobile-web-app-title" content="工作進度">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<script>
+  var APP_URL = 'https://script.google.com/macros/s/AKfycbwLInQlLcsM2b4txP0IYZyn0LJFnJ3CSdefzk52NfdBbTusR9qdtiHKSlRdc6A9TsdoAw/exec';
+  // 從主畫面圖示開啟（網址帶 home=1）就直接進 App
+  if (/[?&]home=1\b/.test(location.search)) location.replace(APP_URL);
+</script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font:16px/1.6 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    background:linear-gradient(160deg,#1F3864 0%,#2B4A80 60%,#3B6FD8 100%);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
+  .wrap{max-width:420px;width:100%;text-align:center}
+  img.logo{width:96px;height:96px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  h1{margin:18px 0 4px;font-size:26px;letter-spacing:2px}
+  .sub{opacity:.85;margin:0 0 26px}
+  a.go{display:block;background:#C2410C;color:#fff;text-decoration:none;font-weight:700;font-size:18px;padding:15px;border-radius:14px;box-shadow:0 6px 18px rgba(194,65,12,.4)}
+  .card{background:rgba(255,255,255,.12);border-radius:14px;padding:16px 18px;margin-top:22px;text-align:left;font-size:14.5px}
+  .card h2{font-size:15px;margin:0 0 8px}
+  .card ol{margin:0;padding-left:20px}
+  .note{font-size:13px;opacity:.8;margin-top:8px}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="logo" src="apple-touch-icon.png" alt="工作進度">
+  <h1>工作進度</h1>
+  <p class="sub">任務・拜訪・團隊進度</p>
+  <a class="go" id="go" href="#">進入 App</a>
+
+  <div class="card">
+    <h2>📲 加到手機主畫面（圖示會是油漆桶）</h2>
+    <div id="ios" class="hide">
+      <ol><li>用 <b>Safari</b> 開啟這一頁</li><li>點下方的「分享」按鈕 <b>⬆︎</b></li><li>選「<b>加入主畫面</b>」→「新增」</li></ol>
+    </div>
+    <div id="android" class="hide">
+      <ol><li>用 <b>Chrome</b> 開啟這一頁</li><li>點右上角 <b>⋮</b></li><li>選「<b>加到主畫面</b>」→「新增」</li></ol>
+    </div>
+    <div id="other" class="hide">
+      <ol><li>請用手機打開這一頁</li><li>iPhone：Safari →「分享」→「加入主畫面」</li><li>Android：Chrome → ⋮ →「加到主畫面」</li></ol>
+    </div>
+    <p class="note" id="lineNote"></p>
+  </div>
+</div>
+<script>
+  document.getElementById('go').href = APP_URL;
+  var ua = navigator.userAgent;
+  var isIOS = /iPhone|iPad|iPod/.test(ua), isAndroid = /Android/.test(ua), inLine = / Line\//i.test(ua);
+  document.getElementById(isIOS ? 'ios' : isAndroid ? 'android' : 'other').classList.remove('hide');
+  if (inLine) {
+    var n = document.getElementById('lineNote');
+    n.innerHTML = '⚠️ 目前在 LINE 裡開啟，無法加到主畫面。<a style="color:#fff" href="?openExternalBrowser=1">點這裡改用手機瀏覽器開啟</a>';
+  }
+  // iPhone 加入主畫面時會記下目前網址：先把網址換成 ?home=1，之後從主畫面點開就會直接進 App
+  if (!inLine && history.replaceState) history.replaceState(null, '', location.pathname + '?home=1');
+</script>
+</body>
+</html>
